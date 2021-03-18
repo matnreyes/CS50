@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Buy
+{% endblock %}
+
+{% block main %}
+    <form action="/buy" method="post">
+        <div class="form-group">
+            <input id="stock" autocomplete="off" autofocus placeholder="Symbol" name="symbol" type="text">
+        </div>
+        <div class="form-group">
+            <input autocomplete="off" autofocus placeholder="# of shares" name="shares" type="text">
+        </div>
+        <button id="submit" class="btn btn-primary" type="submit" disabled>Buy</button>
+    </form>
+
+    <script>
+        let input = document.getElementById('stock');
+        input.addEventListener('keyup', function(){
+            let button = document.getElementById('submit');
+            button.getAttribute("disabled");
+            button.removeAttribute("disabled");
+        });
+    </script>
+{% endblock %}
