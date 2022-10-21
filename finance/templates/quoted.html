@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Quote
+{% endblock %}
+
+{% block main %}
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container">
+        <h1 class="display-4">{{ quote.price | usd }}</h1>
+        <p class="lead">{{ quote.name }} ({{ quote.symbol }})</p>
+      </div>
+    </div>
+{% endblock %}

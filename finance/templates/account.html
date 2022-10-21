@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Account
+{% endblock %}
+
+{% block main %}
+
+    <div class="container">
+        <h3>Account Info</h3>
+        <div> Username: {{ username }}</div>
+        <br>
+        <h5>Change password</h5>
+        <form action="/account" method="POST">
+            <div class="form-group">
+                <div>
+                    <input class="form-control" name="password" placeholder="Current password" type="password">
+                </div>
+                <div>
+                    <input class="form-control" name="new_password" placeholder="New password" type="password">
+                </div>
+                <div>
+                    <input class="form-control" name="new_password_reentry" placeholder="Re-enter new password" type="password">
+                </div>
+                <br>
+                <button class="btn btn-primary" type="submit">Change password</button>
+            </div>
+        </form>
+    </div>
+
+{% endblock %}

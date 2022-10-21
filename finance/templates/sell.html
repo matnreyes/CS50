@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Sell
+{% endblock %}
+
+{% block main %}
+
+    <form action="/sell" method="post">
+
+        <div class="form-group">
+            <select id='select' name="symbol">
+                <option disabled selected value="">Choose a stock</option>
+                {% for stock in stocks %}
+                    <option value="{{ stock.ticker }}">{{ stock.ticker }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <input autofocus autocomplete="off" placeholder="# of shares" name="shares" type="text">
+        </div>
+        <button id="submit" class="btn btn-primary" type="submit" disabled>Sell</button>
+
+    </form>
+
+        <script>
+
+            let input = document.getElementById('select');
+            input.addEventListener('change', function(){
+                let button = document.getElementById('submit');
+                button.getAttribute("disabled");
+                button.removeAttribute("disabled");
+            });
+        </script>
+{% endblock %}

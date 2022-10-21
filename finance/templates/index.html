@@ -1,0 +1,112 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Index
+{% endblock %}
+
+
+{% block main %}
+    <div class="contaioner">
+        <div class="row">
+            <div class="col-sm" style="border:1px solid #cecece;">
+                <h3>Deposit</h3>
+                <form action="/cash" method="post">
+                    <div class="form-group">
+                        $<input autocomplete="off" id="cash" type="text" name="cash">
+                        <button id="cash-submit" class="btn btn-primary" type="submit" disabled>Add</button>
+                    </div>
+                </form>
+
+                <script>
+                    let input = document.getElementById('cash');
+                    input.addEventListener('keyup', function(){
+                    document.getElementById('cash-submit').removeAttribute('disabled')
+                    });
+                </script>
+            </div>
+
+
+            <div class="col-sm" style="border:1px solid #cecece;">
+                <h3>Buy/Sell a stock</h3>
+                    <form action="/sell" method="post" class="form-group" id='action-form'>
+                        <select id='select' name="symbol">
+                            <option disabled selected value="">Symbol</option>
+                            {% for stock in portfolio %}
+                                <option value="{{ stock.ticker }}">{{ stock.ticker }}</option>
+                            {% endfor %}
+                        </select>
+                        <input id='share-input' autocomplete="off" name="shares" type="text">
+                        <select id="action-select">
+                            <option value="sell">Sell</option>
+                            <option value="buy">Buy</option>
+                        </select>
+                        <button id="submit" class="btn btn-primary" type="submit" disabled>Go</button>
+                    </form>
+                    <script>
+                        let share_input = document.getElementById('share-input');
+                        share_input.addEventListener('keyup', function(){
+                            let button = document.getElementById('submit');
+                            button.getAttribute("disabled");
+                            button.removeAttribute("disabled");
+                        });
+
+                        let action = document.getElementById('action-select');
+                        action.addEventListener('change', function(){
+                            let form = document.getElementById('action-form');
+                            let value = document.getElementById('action-select').value;
+
+                            if (value == 'buy'){
+                                form.setAttribute('action', '/buy');
+                            }
+                        });
+                    </script>
+            </div>
+        </div>
+    </div>
+
+
+    <h1>Portfolio</h1>
+    <table class="table">
+        <thread>
+            <tr class="table table-striped">
+                <th scope="col">Symbol</th></th>
+                <th scope="col">Name</th>
+                <th scope="col">Shares</th>
+                <th scope="col">Price (per share)</th>
+                <th scope="col">TOTAL</th>
+                <th scope="col"> </th>
+            </tr>
+        </thread>
+        <tbody>
+            {% for stock in portfolio %}
+                <tr scope="row">
+                    <td>{{ stock.ticker }}</td>
+                    <td>{{ stock.name }}</td>
+                    <td>{{ stock.quantity }}</td>
+                    <td>{{ stock_prices[stock.ticker] | usd }}</td>
+                    <td>{{  (stock.quantity * stock_prices[stock.ticker]) | usd}}</td>
+                    <td></td>
+                </tr>
+            {% endfor %}
+            <tr scope="row">
+                <td>Cash</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>{{ cash | usd }}</td>
+                <td></td>
+            </tr>
+            <tr scope="row">
+                <td><b>TOTAL</b></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>{{ total | usd }}</td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+
+
+
+{% endblock %}
